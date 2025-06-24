@@ -1,0 +1,15 @@
+==== Building raylib (debug_x64) ====
+Creating obj/x64/Debug/raylib
+raudio.c
+rcore.c
+rglfw.c
+rmodels.c
+rshapes.c
+rtext.c
+rtextures.c
+utils.c
+Linking raylib
+==== Building sudocu (debug_x64) ====
+Creating obj/x64/Debug/sudocu
+main.c
+Linking sudocu
