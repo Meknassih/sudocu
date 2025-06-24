@@ -34,6 +34,17 @@ int isLegalAxis(const Cell cells[GRID_COLS]) {
     return 1;
 }
 
+int isLegalRow(const Cell cells[GRID_COLS][GRID_ROWS], const int y) {
+    return isLegalAxis(cells[y]);
+
+}
+
+int isLegalCol(const Cell cells[GRID_COLS][GRID_ROWS], const int x) {
+    Cell col[GRID_ROWS];
+    getCellsColumn(cells, col, x);
+    return isLegalAxis(col);
+}
+
 int isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
     Cell cellsAsAxis[GRID_BLOCK_SIZE*GRID_BLOCK_SIZE];
     flattenBlock(cells, x, y, cellsAsAxis);

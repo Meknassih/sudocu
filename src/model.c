@@ -35,8 +35,8 @@ int genValidValue(const Cell cells[GRID_COLS][GRID_ROWS], const int x, const int
         Coord blockOrigin;
         getBlockOrigin(currentCoords, &blockOrigin);
         getCellsColumn(cells, col, x);
-        const int isRowLegal = isLegalAxis(cellsClone[x]);
-        const int isColLegal = isLegalAxis(col);
+        const int isRowLegal = isLegalRow(cellsClone, y);
+        const int isColLegal = isLegalCol(cellsClone, x);
         const int isBlockLegal = isLegalBlock(cellsClone, blockOrigin.x, blockOrigin.y);
         if (isRowLegal && isColLegal && isBlockLegal) {
             return i;

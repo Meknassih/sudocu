@@ -5,19 +5,42 @@
 #include "raylib.h"
 #include <stdlib.h>
 
+bool isShiftPressed() {
+    return (
+        IsKeyDown(KEY_LEFT_SHIFT) ||
+        IsKeyDown(KEY_RIGHT_SHIFT)
+    );
+}
+
 void handleCursorKeys(Coord *cursorCoords) {
     if (IsKeyPressed(KEY_H) || IsKeyPressedRepeat(KEY_H)) {
-        if ((cursorCoords->x - 1) >= 0)
-            cursorCoords->x -= 1;
+        if (isShiftPressed()) {
+            cursorCoords->x = 0;
+        } else {
+            if ((cursorCoords->x - 1) >= 0)
+                cursorCoords->x -= 1;
+        }
     } else if (IsKeyPressed(KEY_J) || IsKeyPressedRepeat(KEY_J)) {
-        if ((cursorCoords->y + 1) < GRID_ROWS)
-            cursorCoords->y += 1;
+        if (isShiftPressed()) {
+            cursorCoords->y = GRID_ROWS - 1;
+        } else {
+            if ((cursorCoords->y + 1) < GRID_ROWS)
+                cursorCoords->y += 1;
+        }
     } else if (IsKeyPressed(KEY_K) || IsKeyPressedRepeat(KEY_K)) {
-        if ((cursorCoords->y - 1) >= 0)
-            cursorCoords->y -= 1;
+        if (isShiftPressed()) {
+            cursorCoords->y = 0;
+        } else {
+            if ((cursorCoords->y - 1) >= 0)
+                cursorCoords->y -= 1;
+        }
     } else if (IsKeyPressed(KEY_L) || IsKeyPressedRepeat(KEY_L)) {
-        if ((cursorCoords->x + 1) < GRID_COLS)
-            cursorCoords->x += 1;
+        if (isShiftPressed()) {
+            cursorCoords->x = GRID_COLS - 1;
+        } else {
+            if ((cursorCoords->x + 1) < GRID_COLS)
+                cursorCoords->x += 1;
+        }
     }
 }
 
@@ -31,6 +54,11 @@ void handleValueInput(const Coord cursorCoords, Cell cells[GRID_COLS][GRID_ROWS]
         const int i = atoi(c);
         cells[cursorCoords.x][cursorCoords.y].value = i;
     }
+}
+
+void handleCommandKeys() {}
+
+void handlePuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
 }
 
 #endif
