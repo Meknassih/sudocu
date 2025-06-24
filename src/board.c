@@ -4,6 +4,8 @@
 #include "definitions.h"
 #include "raylib.h"
 #include <stdlib.h>
+#include <string.h>
+#include "util.c"
 
 #define gapX ((WINDOW_WIDTH / GRID_COLS) / GRID_COLS)
 #define gapY ((WINDOW_HEIGHT / GRID_ROWS) / GRID_ROWS)
@@ -79,6 +81,48 @@ void drawValues(const Cell cells[GRID_COLS][GRID_ROWS]) {
             DrawText(str, x, y, GRID_FONT_SIZE, color);
         }
     }
+}
+
+void drawStatusBar(GameState gs) {
+    int y = WINDOW_HEIGHT - gapBorderingY,
+        x = gapBorderingX,
+        strcat_err = 0;
+
+    char statusText[2048] = "",
+        err_str[1024] = "",
+        cStr[21] = "c: check solution  ",
+        hjklStr[14] = "hjkl: move  ",
+        shiftHjklStr[20] = "Shift+hjkl: jump  ",
+        dStr[12] = "d: delete  ";
+
+    if (isGridFull(gs.gridCells)) {
+        strcat_err = strcat_s(statusText, sizeof statusText, cStr);
+        if (strcat_err != 0) {
+            strerror_s(err_str, sizeof err_str, strcat_err);
+            fprintf(stderr, "%s\n", err_str);
+        }
+    }
+    
+    if (!selectedCell(&gs)->isClue && selectedCell(&gs)->value != -1) {
+        strcat_err = strcat_s(statusText, sizeof statusText, dStr);
+        if (strcat_err != 0) {
+            strerror_s(err_str, sizeof err_str, strcat_err);
+            fprintf(stderr, "%s\n", err_str);
+        }
+    }
+
+    strcat_err = strcat_s(statusText, sizeof statusText, hjklStr);
+    if (strcat_err != 0) {
+        strerror_s(err_str, sizeof err_str, strcat_err);
+        fprintf(stderr, "%s\n", err_str);
+    }
+    strcat_err = strcat_s(statusText, sizeof statusText, shiftHjklStr);
+    if (strcat_err != 0) {
+        strerror_s(err_str, sizeof err_str, strcat_err);
+        fprintf(stderr, "%s\n", err_str);
+    }
+
+    DrawText(statusText, x, y, 20, GREEN);
 }
 
 #endif

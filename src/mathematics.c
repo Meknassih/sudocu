@@ -1,15 +1,15 @@
 #ifndef MATHEMATICS_C
 #define MATHEMATICS_C
 
+#include "definitions.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 long int factorial(int n) {
     long int ret;
 
     if (n < 0) {
         fprintf(stderr, "Attempting factorial of negative number");
-        exit(EXIT_FAILURE);
+        shouldClose = true;
     } else if (n == 0) {
         return 1;
     } else {

@@ -19,6 +19,8 @@ void initGameState(GameState *gs) {
     
     gs->cursorPos.x = 0;
     gs->cursorPos.y = 0;
+    gs->state = ONGOING_PUZZLE;
+    gs->shouldClose = false;
 }
 
 #endif

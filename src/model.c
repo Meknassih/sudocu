@@ -46,7 +46,8 @@ int genValidValue(const Cell cells[GRID_COLS][GRID_ROWS], const int x, const int
 
     printGridHighlight(cells, x, y);
     fprintf(stderr, "Impossible to generate valid value\n");
-    exit(EXIT_FAILURE);
+    shouldClose = true;
+    return -1;
 }
 
 void genRandomCells(Cell cells[GRID_COLS][GRID_ROWS], const Difficulty difficulty) {

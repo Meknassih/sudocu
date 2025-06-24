@@ -4,7 +4,6 @@
 
 #include "definitions.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include "util.c"
 
 int isLegalValue(const int v) {
@@ -17,7 +16,7 @@ int isLegalAxis(const Cell cells[GRID_COLS]) {
         for (int j = 0; j < GRID_COLS; j++) {
             if (!isLegalValue(cells[i].value || !isLegalValue(cells[j].value))) {
                 fprintf(stderr, "Encountered illegal value");
-                exit(EXIT_FAILURE);
+                shouldClose = true;
             } else if (
                 i == j ||
                 cells[i].value == -1 ||

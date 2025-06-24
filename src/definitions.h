@@ -1,6 +1,7 @@
 #ifndef DEFINTIONS_H
 #define DEFINTIONS_H
 
+#include <stdbool.h>
 #define VERBOSE 0
 
 #define GRID_COLS 9
@@ -16,6 +17,8 @@
 #error "Grid size and group size not supported"
 #endif
 
+bool shouldClose = false;
+
 typedef struct {
     int x;
     int y;
@@ -26,9 +29,17 @@ typedef struct {
     int isClue;
 } Cell;
 
+typedef enum {
+    TITLE_SCREEN,
+    ONGOING_PUZZLE,
+    SOLVED_PUZZLE,
+} State;
+
 typedef struct {
     Cell gridCells[GRID_COLS][GRID_ROWS];
     Coord cursorPos;
+    State state;
+    bool shouldClose;
 } GameState;
 
 typedef enum {
@@ -38,5 +49,6 @@ typedef enum {
     HARD = 3,
     VERY_HARD = 4,
 } Difficulty;
+
 
 #endif

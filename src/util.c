@@ -2,6 +2,7 @@
 #define UTIL_C
 
 #include "definitions.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -90,6 +91,20 @@ void printRow(const Cell cells[GRID_COLS]) {
         debugPrint("%d\t", cells[i].value);
     }
     debugPrint("\n");
+}
+
+bool isGridFull(const Cell cells[GRID_COLS][GRID_ROWS]) {
+    for (int i = 0; i < GRID_COLS; i++) {
+        for (int j = 0; j < GRID_ROWS; j++) {
+            if (cells[i][j].value == -1) return false;
+        }
+    }
+
+    return true;
+}
+
+Cell* selectedCell(GameState *gs) {
+    return &gs->gridCells[gs->cursorPos.x][gs->cursorPos.y];
 }
 
 #endif /* ifndef UTIL_C */

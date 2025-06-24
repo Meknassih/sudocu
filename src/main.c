@@ -32,24 +32,36 @@ int main ()
 	initGameState(&gs);
 	
 	// game loop
-	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
+	while (!WindowShouldClose() && !shouldClose)
 	{
-		// Input checks
-		handleCommandKeys();
-		handleCursorKeys(&(gs.cursorPos));
-		handleValueInput(gs.cursorPos, gs.gridCells);
+		switch (gs.state) {
+			case TITLE_SCREEN:
+				break;
+			case ONGOING_PUZZLE:
+				// Input checks
+				handleCommandKeys(&gs);
+				handleCursorKeys(&(gs.cursorPos));
+				handleValueInput(gs.cursorPos, gs.gridCells);
 
-		// Drawing
-		BeginDrawing();
-		// Setup the back buffer for drawing (clear color and depth buffers)
-		ClearBackground(MAROON);
+				// Drawing
+				BeginDrawing();
+				// Setup the back buffer for drawing (clear color and depth buffers)
+				ClearBackground(MAROON);
 
-		drawBoard();
-		drawValues(gs.gridCells);
-		drawCursor(gs.cursorPos);
-		
-		// end the frame and get ready for the next one  (display frame, poll input, etc...)
-		EndDrawing();
+				drawBoard();
+				drawValues(gs.gridCells);
+				drawCursor(gs.cursorPos);
+				drawStatusBar(gs);
+
+				// end the frame and get ready for the next one  (display frame, poll input, etc...)
+				EndDrawing();
+				break;
+			case SOLVED_PUZZLE:
+				break;
+			default:
+				fprintf(stderr, "Unknown state gs->state\n");
+				shouldClose = true;
+		}
 	}
 
 	// cleanup

@@ -4,6 +4,7 @@
 #include "definitions.h"
 #include "raylib.h"
 #include <stdlib.h>
+#include "util.c"
 
 bool isShiftPressed() {
     return (
@@ -56,9 +57,21 @@ void handleValueInput(const Coord cursorCoords, Cell cells[GRID_COLS][GRID_ROWS]
     }
 }
 
-void handleCommandKeys() {}
+void handleCommandKeys(GameState *gs) {
+    if (IsKeyPressed(KEY_C)) {
+        // TODO: use solver
+    } else if (
+        (IsKeyPressed(KEY_D) ||
+        IsKeyPressed(KEY_BACKSPACE) ||
+        IsKeyPressed(KEY_DELETE)) &&
+        !selectedCell(gs)->isClue
+    ) {
+        selectedCell(gs)->value = -1;
+    }
+}
 
 void handlePuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
+    if (!isGridFull(cells)) return;
 }
 
 #endif
