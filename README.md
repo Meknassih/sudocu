@@ -1,15 +1,9 @@
-# Raylib-Quickstart
-A simple cross platform template for setting up a project with the bleeding edge raylib code.
-Works with C or C++.
+# Sudocu (raylib)
 
 ## Supported Platforms
-Quickstart supports the main 3 desktop platforms:
 * Windows
 * Linux
 * MacOS
-
-# Naming projects
-Do not name your game project 'raylib', it will conflict with the raylib library.
 
 # VSCode Users (all platforms)
 *Note* You must have a compiler toolchain installed in addition to vscode.
