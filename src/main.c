@@ -57,6 +57,27 @@ int main ()
 				EndDrawing();
 				break;
 			case SOLVED_PUZZLE:
+				BeginDrawing();
+				ClearBackground(MAROON);
+
+				drawBoard();
+				drawValues(gs.gridCells);
+				drawCursor(gs.cursorPos);
+				drawStatusBar(gs);
+
+				EndDrawing();
+				break;
+			case FAILED_SOLVING:
+				handleFailSolvDialogCommands(&gs.state);
+
+				BeginDrawing();
+				ClearBackground(MAROON);
+
+				drawBoard();
+				drawValues(gs.gridCells);
+				drawFailedSolvingDialog();
+
+				EndDrawing();
 				break;
 			default:
 				fprintf(stderr, "Unknown state gs->state\n");

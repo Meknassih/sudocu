@@ -5,6 +5,7 @@
 #include "raylib.h"
 #include <stdlib.h>
 #include "util.c"
+#include "solver.c"
 
 bool isShiftPressed() {
     return (
@@ -59,7 +60,11 @@ void handleValueInput(const Coord cursorCoords, Cell cells[GRID_COLS][GRID_ROWS]
 
 void handleCommandKeys(GameState *gs) {
     if (IsKeyPressed(KEY_C)) {
-        // TODO: use solver
+        if (isPuzzleSolved(gs->gridCells)) {
+            gs->state = SOLVED_PUZZLE;
+        } else {
+            gs->state = FAILED_SOLVING;
+        }
     } else if (
         (IsKeyPressed(KEY_D) ||
         IsKeyPressed(KEY_BACKSPACE) ||
@@ -70,8 +75,10 @@ void handleCommandKeys(GameState *gs) {
     }
 }
 
-void handlePuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
-    if (!isGridFull(cells)) return;
+void handleFailSolvDialogCommands(State *s) {
+    if (IsKeyPressed(KEY_ENTER)) {
+        *s = ONGOING_PUZZLE;
+    }
 }
 
 #endif

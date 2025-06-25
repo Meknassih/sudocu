@@ -125,4 +125,22 @@ void drawStatusBar(GameState gs) {
     DrawText(statusText, x, y, 20, GREEN);
 }
 
+void drawFailedSolvingDialog() {
+    DrawRectangle(0, WINDOW_HEIGHT/3, WINDOW_WIDTH, WINDOW_HEIGHT/3, DARKBROWN);
+    const char mainText[40] = "There is an illegal cell in the puzzle.",
+        helpText[13] = "enter: close";
+    const int mainTextWidth = MeasureText(mainText, 40),
+        helpTextWidth = MeasureText(helpText, 30);
+    DrawText(mainText,
+             (WINDOW_WIDTH/2) - (mainTextWidth/2),
+             (WINDOW_HEIGHT/3) + 80,
+             40,
+             WHITE);
+    DrawText(helpText,
+             (WINDOW_WIDTH/2) - (helpTextWidth/2),
+             (WINDOW_HEIGHT/3) * 2 - 80,
+             30,
+             WHITE);
+}
+
 #endif

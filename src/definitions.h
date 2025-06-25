@@ -33,6 +33,7 @@ typedef enum {
     TITLE_SCREEN,
     ONGOING_PUZZLE,
     SOLVED_PUZZLE,
+    FAILED_SOLVING
 } State;
 
 typedef struct {

@@ -6,12 +6,12 @@
 #include <stdio.h>
 #include "util.c"
 
-int isLegalValue(const int v) {
+bool isLegalValue(const int v) {
     return (v == -1 || (v > 0 && v <= 9));
 }
 
 // Only works for square grids
-int isLegalAxis(const Cell cells[GRID_COLS]) {
+bool isLegalAxis(const Cell cells[GRID_COLS]) {
     for (int i = 0; i < GRID_COLS; i++) {
         for (int j = 0; j < GRID_COLS; j++) {
             if (!isLegalValue(cells[i].value || !isLegalValue(cells[j].value))) {
@@ -25,26 +25,26 @@ int isLegalAxis(const Cell cells[GRID_COLS]) {
                 continue;
             } else if (cells[j].value == cells[i].value) {
                 debugPrint("Illegal axis because cell indexes %d (%d) == %d (%d)\n", i, cells[i].value, j, cells[j].value);
-                return 0;
+                return false;
             }
         }
     }
 
-    return 1;
+    return true;
 }
 
-int isLegalRow(const Cell cells[GRID_COLS][GRID_ROWS], const int y) {
+bool isLegalRow(const Cell cells[GRID_COLS][GRID_ROWS], const int y) {
     return isLegalAxis(cells[y]);
 
 }
 
-int isLegalCol(const Cell cells[GRID_COLS][GRID_ROWS], const int x) {
+bool isLegalCol(const Cell cells[GRID_COLS][GRID_ROWS], const int x) {
     Cell col[GRID_ROWS];
     getCellsColumn(cells, col, x);
     return isLegalAxis(col);
 }
 
-int isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
+bool isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
     Cell cellsAsAxis[GRID_BLOCK_SIZE*GRID_BLOCK_SIZE];
     flattenBlock(cells, x, y, cellsAsAxis);
     debugPrint("Flattened block at origin %d,%d :\n", y, x);
@@ -52,5 +52,23 @@ int isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
     return isLegalAxis(cellsAsAxis);
 }
 
+bool isPuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
+    for (int i = 0; i < GRID_ROWS; i++) {
+        if (!isLegalRow(cells, i)) return false;
+    }
+
+    for (int i = 0; i < GRID_COLS; i++) {
+        if (!isLegalCol(cells, i)) return false;
+    }
+
+    for (int i = 0; i < GRID_COLS / GRID_BLOCK_SIZE; i++) {
+        for (int j = 0; j < GRID_COLS / GRID_BLOCK_SIZE; j++) {
+            if (!isLegalBlock(cells, i * GRID_BLOCK_SIZE, j * GRID_BLOCK_SIZE))
+                return false;
+        }
+    }
+
+    return true;
+}
 
 #endif /* ifndef SOLVER_C */
