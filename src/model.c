@@ -2,6 +2,7 @@
 #define MODEL_C
 
 #include "definitions.h"
+#include <debugapi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "util.c"
@@ -9,6 +10,8 @@
 
 int getClueCount(const Difficulty d) {
     switch (d) {
+        case FULL_DEBUG:
+            return 81;
         case VERY_EASY:
             return 63;
         case EASY:
@@ -35,9 +38,13 @@ int genValidValue(const Cell cells[GRID_COLS][GRID_ROWS], const int x, const int
         Coord blockOrigin;
         getBlockOrigin(currentCoords, &blockOrigin);
         getCellsColumn(cells, col, x);
-        const int isRowLegal = isLegalRow(cellsClone, y);
-        const int isColLegal = isLegalCol(cellsClone, x);
+        debugPrint("---\n");
+        const int isRowLegal = isLegalRow(cellsClone, x); // x,y inversed problem !
+        debugPrint("---\n");
+        const int isColLegal = isLegalCol(cellsClone, y); // x,y inversed problem !
+        debugPrint("---\n");
         const int isBlockLegal = isLegalBlock(cellsClone, blockOrigin.x, blockOrigin.y);
+        debugPrint("---\n");
         if (isRowLegal && isColLegal && isBlockLegal) {
             return i;
         }
@@ -47,6 +54,7 @@ int genValidValue(const Cell cells[GRID_COLS][GRID_ROWS], const int x, const int
     printGridHighlight(cells, x, y);
     fprintf(stderr, "Impossible to generate valid value\n");
     shouldClose = true;
+    DebugBreak();
     return -1;
 }
 

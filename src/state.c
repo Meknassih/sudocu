@@ -15,7 +15,7 @@ void initCells(Cell cells[GRID_COLS][GRID_ROWS]) {
 
 void initGameState(GameState *gs) {
     initCells(gs->gridCells);
-    genRandomCells(gs->gridCells, EASY);
+    genRandomCells(gs->gridCells, FULL_DEBUG);
     
     gs->cursorPos.x = 0;
     gs->cursorPos.y = 0;

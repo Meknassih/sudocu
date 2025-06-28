@@ -24,7 +24,7 @@ bool isLegalAxis(const Cell cells[GRID_COLS]) {
             ) {
                 continue;
             } else if (cells[j].value == cells[i].value) {
-                debugPrint("Illegal axis because cell indexes %d (%d) == %d (%d)\n", i, cells[i].value, j, cells[j].value);
+                debugPrint("\tIllegal axis because cell indexes %d (%d) == %d (%d)\n", i, cells[i].value, j, cells[j].value);
                 return false;
             }
         }
@@ -34,20 +34,24 @@ bool isLegalAxis(const Cell cells[GRID_COLS]) {
 }
 
 bool isLegalRow(const Cell cells[GRID_COLS][GRID_ROWS], const int y) {
-    return isLegalAxis(cells[y]);
-
+    debugPrint("\tTesting row %d:\n", y);
+    printRow(cells[y]);
+    const bool ret = isLegalAxis(cells[y]);
+    return ret;
 }
 
 bool isLegalCol(const Cell cells[GRID_COLS][GRID_ROWS], const int x) {
     Cell col[GRID_ROWS];
     getCellsColumn(cells, col, x);
+    debugPrint("\tTesting col %d:\n", x);
+    printRow(col);
     return isLegalAxis(col);
 }
 
 bool isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
     Cell cellsAsAxis[GRID_BLOCK_SIZE*GRID_BLOCK_SIZE];
     flattenBlock(cells, x, y, cellsAsAxis);
-    debugPrint("Flattened block at origin %d,%d :\n", y, x);
+    debugPrint("\tTesting flattened block at origin %d,%d :\n", x, y);
     printRow(cellsAsAxis);
     return isLegalAxis(cellsAsAxis);
 }

@@ -79,6 +79,15 @@ void drawValues(const Cell cells[GRID_COLS][GRID_ROWS]) {
             char str[8]; 
             _itoa_s(cells[i][j].value, str, 8, 10);
             DrawText(str, x, y, GRID_FONT_SIZE, color);
+            if (VERBOSE) {
+                char coordsStr[12] = "";
+                formatCoords(i, j, coordsStr);
+                DrawText(
+                    coordsStr,
+                    i * (cellWidth + gapX) + gapBorderingX,
+                    j * (cellHeight + gapY) + gapBorderingY,
+                    20, BLUE);
+            }
         }
     }
 }

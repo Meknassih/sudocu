@@ -2,7 +2,7 @@
 #define DEFINTIONS_H
 
 #include <stdbool.h>
-#define VERBOSE 0
+#define VERBOSE 1
 
 #define GRID_COLS 9
 #define GRID_ROWS 9
@@ -44,11 +44,12 @@ typedef struct {
 } GameState;
 
 typedef enum {
-    VERY_EASY = 0,
-    EASY = 1,
-    STANDARD = 2,
-    HARD = 3,
-    VERY_HARD = 4,
+    FULL_DEBUG,
+    VERY_EASY,
+    EASY,
+    STANDARD,
+    HARD,
+    VERY_HARD,
 } Difficulty;
 
 

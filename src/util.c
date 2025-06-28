@@ -4,6 +4,7 @@
 #include "definitions.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 
@@ -44,8 +45,8 @@ void cloneCells(const int cols, const int rows, const Cell cells[cols][rows], Ce
 
 void getCellsColumn(const Cell cells[GRID_COLS][GRID_ROWS], Cell col[GRID_ROWS], const int x) {
     for (int i = 0; i < GRID_ROWS; i++) {
-        col[i].value = cells[x][i].value;
-        col[i].isClue = cells[x][i].isClue;
+        col[i].value = cells[i][x].value;
+        col[i].isClue = cells[i][x].isClue;
     }
 }
 
@@ -105,6 +106,15 @@ bool isGridFull(const Cell cells[GRID_COLS][GRID_ROWS]) {
 
 Cell* selectedCell(GameState *gs) {
     return &gs->gridCells[gs->cursorPos.x][gs->cursorPos.y];
+}
+
+void formatCoords(const int x, const int y, char *formatted) {
+    char xStr[3], yStr[3];
+    _itoa_s(x, xStr, sizeof xStr, 10);
+    _itoa_s(y, yStr, sizeof yStr, 10);
+    strcat_s(formatted, sizeof formatted, xStr);
+    strcat_s(formatted, sizeof formatted, ", ");
+    strcat_s(formatted, sizeof formatted, yStr);
 }
 
 #endif /* ifndef UTIL_C */
