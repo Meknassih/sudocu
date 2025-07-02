@@ -3,6 +3,7 @@
 
 #include "definitions.h"
 #include "model.c"
+#include "backtrack.c"
 
 void initCells(Cell cells[GRID_COLS][GRID_ROWS]) {
     for (int i = 0; i < GRID_COLS; i++) {
@@ -15,12 +16,13 @@ void initCells(Cell cells[GRID_COLS][GRID_ROWS]) {
 
 void initGameState(GameState *gs) {
     initCells(gs->gridCells);
-    genRandomCells(gs->gridCells, FULL_DEBUG);
+    genRandomCells(gs->gridCells, EASY);
     
     gs->cursorPos.x = 0;
     gs->cursorPos.y = 0;
     gs->state = ONGOING_PUZZLE;
     gs->shouldClose = false;
+    createNode(gs->gridCells, NULL, &(gs->root));
 }
 
 #endif

@@ -94,16 +94,6 @@ void printRow(const Cell cells[GRID_COLS]) {
     debugPrint("\n");
 }
 
-bool isGridFull(const Cell cells[GRID_COLS][GRID_ROWS]) {
-    for (int i = 0; i < GRID_COLS; i++) {
-        for (int j = 0; j < GRID_ROWS; j++) {
-            if (cells[i][j].value == -1) return false;
-        }
-    }
-
-    return true;
-}
-
 Cell* selectedCell(GameState *gs) {
     return &gs->gridCells[gs->cursorPos.x][gs->cursorPos.y];
 }
@@ -115,6 +105,24 @@ void formatCoords(const int x, const int y, char *formatted) {
     strcat_s(formatted, sizeof formatted, xStr);
     strcat_s(formatted, sizeof formatted, ", ");
     strcat_s(formatted, sizeof formatted, yStr);
+}
+
+bool findFirstEmptyCell(const Cell cells[GRID_COLS][GRID_ROWS], int *x, int *y) {
+    for (int i = 0; i < GRID_ROWS; i++) {
+        for (int j = 0; j < GRID_COLS; j++) {
+            if (cells[i][j].value == -1) {
+                if (x != NULL) *x = j;
+                if (y != NULL) *y = i;
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool isGridFull(const Cell cells[GRID_COLS][GRID_ROWS]) {
+    return !findFirstEmptyCell(cells, NULL, NULL);
 }
 
 #endif /* ifndef UTIL_C */

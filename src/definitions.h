@@ -2,7 +2,7 @@
 #define DEFINTIONS_H
 
 #include <stdbool.h>
-#define VERBOSE 1
+#define VERBOSE 0
 
 #define GRID_COLS 9
 #define GRID_ROWS 9
@@ -36,11 +36,22 @@ typedef enum {
     FAILED_SOLVING
 } State;
 
+struct BTNode {
+    Cell cells[GRID_COLS][GRID_ROWS];
+    struct BTNode *parent;
+    struct BTNode *children;
+    int childrenCount;
+    struct BTNode **childrenTried;
+    int triedCount;
+};
+typedef struct BTNode BTNode;
+
 typedef struct {
     Cell gridCells[GRID_COLS][GRID_ROWS];
     Coord cursorPos;
     State state;
     bool shouldClose;
+    BTNode root;
 } GameState;
 
 typedef enum {

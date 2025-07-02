@@ -56,7 +56,7 @@ bool isLegalBlock(const Cell cells[GRID_COLS][GRID_ROWS], const int x, int y) {
     return isLegalAxis(cellsAsAxis);
 }
 
-bool isPuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
+bool isGridLegal(const Cell cells[GRID_COLS][GRID_ROWS]) {
     for (int i = 0; i < GRID_ROWS; i++) {
         if (!isLegalRow(cells, i)) return false;
     }
@@ -67,12 +67,16 @@ bool isPuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
 
     for (int i = 0; i < GRID_COLS / GRID_BLOCK_SIZE; i++) {
         for (int j = 0; j < GRID_COLS / GRID_BLOCK_SIZE; j++) {
-            if (!isLegalBlock(cells, i * GRID_BLOCK_SIZE, j * GRID_BLOCK_SIZE))
+            if (!isLegalBlock(cells, j * GRID_BLOCK_SIZE, i * GRID_BLOCK_SIZE))
                 return false;
         }
     }
 
     return true;
+}
+
+bool isPuzzleSolved(const Cell cells[GRID_COLS][GRID_ROWS]) {
+    return (isGridFull(cells) && isGridLegal(cells));
 }
 
 #endif /* ifndef SOLVER_C */

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "util.c"
 #include "solver.c"
+#include "backtrack.c"
 
 bool isShiftPressed() {
     return (
@@ -72,6 +73,13 @@ void handleCommandKeys(GameState *gs) {
         !selectedCell(gs)->isClue
     ) {
         selectedCell(gs)->value = -1;
+    } else if (IsKeyPressed(KEY_S)) {
+        if (backtrack_solve(&(gs->root))) {
+            printf("Found solution\n");
+            printGrid(gs->root.cells);
+        } else {
+            printf("No solution found\n");
+        }
     }
 }
 
