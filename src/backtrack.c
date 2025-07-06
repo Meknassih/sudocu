@@ -35,7 +35,7 @@ void setNodeChildren(BTNode *n) {
             n->children = NULL;
         }
         if (n->childrenTried != NULL) {
-            // Not freeing its children becase they are just refs to n->children
+            // Not freeing its children because they are just refs to n->children
             free(n->childrenTried);
             n->childrenTried = NULL;
         }
@@ -48,9 +48,11 @@ void setNodeChildren(BTNode *n) {
     } else {
         n->children = malloc(sizeof(BTNode) * GRID_COLS);
         n->childrenTried = malloc(sizeof(BTNode*) * GRID_COLS);
+        n->childrenCount = 0;
+        n->triedCount = 0;
     }
 
-    for (int i = 0; i < GRID_ROWS; i++) {
+    for (int i = 0; i < GRID_COLS; i++) {
         Cell clone[GRID_COLS][GRID_ROWS];
         cloneCells(GRID_COLS, GRID_ROWS, n->cells, clone);
         clone[y][x].value = i + 1;
@@ -75,7 +77,7 @@ BTNode *nextUntriedChild(BTNode *n) {
         }
     }
 
-    perror("All children of %p have been tried without success");
+    perror("All children of node have been tried without success");
     return NULL;
 }
 
@@ -96,14 +98,18 @@ BTNode *next(BTNode *c) {
 }
 
 bool backtrack_solve(BTNode *n) {
+    bool solved = false;
+
     if (reject(*n)) return false;
     else if (accept(*n)) return true;
     
-    bool solved = false;
-    BTNode *n2 = next(n);
-    while (n2 != NULL && !solved) {
-        solved = backtrack_solve(n2);
-        n2 = next(n2);
+    if (n->childrenCount == 0) {
+        setNodeChildren(n);
+    }
+
+    for (int i = 0; i < n->childrenCount; i++) {
+        solved = backtrack_solve(&(n->children[i]));
+        if (solved) break;
     }
 
     return solved;

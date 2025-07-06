@@ -15,35 +15,43 @@ bool isShiftPressed() {
     );
 }
 
-void handleCursorKeys(Coord *cursorCoords) {
+void handleCursorKeys(GameState *gs) {
     if (IsKeyPressed(KEY_H) || IsKeyPressedRepeat(KEY_H)) {
         if (isShiftPressed()) {
-            cursorCoords->x = 0;
+            gs->cursorPos.x = 0;
         } else {
-            if ((cursorCoords->x - 1) >= 0)
-                cursorCoords->x -= 1;
+            if ((gs->cursorPos.x - 1) >= 0)
+                gs->cursorPos.x -= 1;
         }
+
+        if (gs->state == SOLVED_PUZZLE) gs->state = ONGOING_PUZZLE;
     } else if (IsKeyPressed(KEY_J) || IsKeyPressedRepeat(KEY_J)) {
         if (isShiftPressed()) {
-            cursorCoords->y = GRID_ROWS - 1;
+            gs->cursorPos.y = GRID_ROWS - 1;
         } else {
-            if ((cursorCoords->y + 1) < GRID_ROWS)
-                cursorCoords->y += 1;
+            if ((gs->cursorPos.y + 1) < GRID_ROWS)
+                gs->cursorPos.y += 1;
         }
+
+        if (gs->state == SOLVED_PUZZLE) gs->state = ONGOING_PUZZLE;
     } else if (IsKeyPressed(KEY_K) || IsKeyPressedRepeat(KEY_K)) {
         if (isShiftPressed()) {
-            cursorCoords->y = 0;
+            gs->cursorPos.y = 0;
         } else {
-            if ((cursorCoords->y - 1) >= 0)
-                cursorCoords->y -= 1;
+            if ((gs->cursorPos.y - 1) >= 0)
+                gs->cursorPos.y -= 1;
         }
+
+        if (gs->state == SOLVED_PUZZLE) gs->state = ONGOING_PUZZLE;
     } else if (IsKeyPressed(KEY_L) || IsKeyPressedRepeat(KEY_L)) {
         if (isShiftPressed()) {
-            cursorCoords->x = GRID_COLS - 1;
+            gs->cursorPos.x = GRID_COLS - 1;
         } else {
-            if ((cursorCoords->x + 1) < GRID_COLS)
-                cursorCoords->x += 1;
+            if ((gs->cursorPos.x + 1) < GRID_COLS)
+                gs->cursorPos.x += 1;
         }
+
+        if (gs->state == SOLVED_PUZZLE) gs->state = ONGOING_PUZZLE;
     }
 }
 
@@ -77,8 +85,10 @@ void handleCommandKeys(GameState *gs) {
         if (backtrack_solve(&(gs->root))) {
             printf("Found solution\n");
             printGrid(gs->root.cells);
+            gs->state = SOLVED_PUZZLE;
         } else {
             printf("No solution found\n");
+            gs->state = FAILED_SOLVING;
         }
     }
 }

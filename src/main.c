@@ -40,7 +40,7 @@ int main ()
 			case ONGOING_PUZZLE:
 				// Input checks
 				handleCommandKeys(&gs);
-				handleCursorKeys(&(gs.cursorPos));
+				handleCursorKeys(&gs);
 				handleValueInput(gs.cursorPos, gs.gridCells);
 
 				// Drawing
@@ -57,8 +57,12 @@ int main ()
 				EndDrawing();
 				break;
 			case SOLVED_PUZZLE:
+				handleCommandKeys(&gs);
+				handleCursorKeys(&gs);
+				handleValueInput(gs.cursorPos, gs.gridCells);
+
 				BeginDrawing();
-				ClearBackground(MAROON);
+				ClearBackground(DARKGREEN);
 
 				drawBoard();
 				drawValues(gs.gridCells);

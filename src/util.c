@@ -125,4 +125,31 @@ bool isGridFull(const Cell cells[GRID_COLS][GRID_ROWS]) {
     return !findFirstEmptyCell(cells, NULL, NULL);
 }
 
+int intArrayIndexOf(int *arr, const int len, const int searched) {
+    for (int i = 0; i < len; i++) {
+        if (arr[i] == searched) return i;
+    }
+
+    return -1;
+}
+
+void mapNumbersToRand(int *sourceNums, int *destNums, const int length) {
+    for (int i = 0; i < length; i++) {
+        int r;
+        do {
+            r = (rand() % GRID_ROWS) + 1;
+        } while (intArrayIndexOf(sourceNums, length, r) > -1);
+        sourceNums[i] = r;
+    }
+
+    for (int i = 0; i < length; i++) {
+        int r;
+        do {
+            r = (rand() % GRID_ROWS) + 1;
+        } while (intArrayIndexOf(destNums, length, r) > -1 ||
+            sourceNums[i] == r);
+        destNums[i] = r;
+    }
+}
+
 #endif /* ifndef UTIL_C */

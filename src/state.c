@@ -16,13 +16,16 @@ void initCells(Cell cells[GRID_COLS][GRID_ROWS]) {
 
 void initGameState(GameState *gs) {
     initCells(gs->gridCells);
-    genRandomCells(gs->gridCells, EASY);
+    do {
+        genRandomCells(gs->gridCells, HARD);
+        createNode(gs->gridCells, NULL, &(gs->root));
+        debugPrint("Trying generation of intial puzzle");
+    } while (!backtrack_solve(&(gs->root)));
     
     gs->cursorPos.x = 0;
     gs->cursorPos.y = 0;
     gs->state = ONGOING_PUZZLE;
     gs->shouldClose = false;
-    createNode(gs->gridCells, NULL, &(gs->root));
 }
 
 #endif

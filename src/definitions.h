@@ -56,6 +56,7 @@ typedef struct {
 
 typedef enum {
     FULL_DEBUG,
+    ONE_DEBUG,
     VERY_EASY,
     EASY,
     STANDARD,
