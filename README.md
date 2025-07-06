@@ -5,15 +5,6 @@
 * Linux
 * MacOS
 
-# VSCode Users (all platforms)
-*Note* You must have a compiler toolchain installed in addition to vscode.
-
-* Download the quickstart
-* Rename the folder to your game name
-* Open the folder in VSCode
-* Run the build task ( CTRL+SHIFT+B or F5 )
-* You are good to go
-
 # Windows Users
 There are two compiler toolchains available for windows, MinGW-W64 (a free compiler using GCC), and Microsoft Visual Studio
 ## Using MinGW-W64
@@ -21,6 +12,9 @@ There are two compiler toolchains available for windows, MinGW-W64 (a free compi
 * CD into the folder in your terminal
 * run `make`
 * You are good to go
+
+## Debugging with GDB
+`make all && gdb bin\Debug\sudocu.exe`
 
 ### Note on MinGW-64 versions
 Make sure you have a modern version of MinGW-W64 (not mingw).
